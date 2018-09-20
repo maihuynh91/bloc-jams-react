@@ -17,7 +17,8 @@ class Album extends Component{
         isPlaying: false,
         isHovered: null,
         currentTime: 0,
-        duration: album.songs[0].duration
+        duration: album.songs[0].duration,
+        currentVolume: 0
     }
 
     this.audioElement = document.createElement("audio");
@@ -79,6 +80,12 @@ class Album extends Component{
         this.setState({currentTime: newTime})
     }
 
+    handleVolumeChange(e){
+        const newVolume = e.target.value;
+        this.audioElement.volume = newVolume;
+        this.setState({currentVolume: newVolume})
+    }
+
     renderButton(song, index){
         if (song === this.state.currentSong){
             if( this.state.isPlaying === true){
@@ -114,6 +121,17 @@ class Album extends Component{
         this.audioElement.removeEventListener("durationchange", this.audioElement.durationchange)
     }
 
+    formatTime(time){
+        try{
+        var m = Math.floor(time / 60);
+        var s = Math.floor(time % 60);
+        return m + ":" + s;
+        }catch(err){
+            console.log(err)
+            return "-:--";
+        }
+    }
+
     render() {
       return(
         <section className="album">
@@ -140,7 +158,7 @@ class Album extends Component{
                 
                     <td>{this.renderButton(song, index)}</td> 
                     <td>{song.title}</td>
-                    <td>{song.duration} </td>
+                    <td>{this.formatTime(song.duration)} </td>
                     </tr>     
                 )
                 }
@@ -156,6 +174,8 @@ class Album extends Component{
             handlePrevClick={()=> this.handlePrevClick()}
             handleNextClick={() => this.handleNextClick()}
             handleTimeChange={(e) => this.handleTimeChange(e)}
+            handleVolumeChange={(e) => this.handleVolumeChange(e)}
+            timeFormat={this.formatTime}
             />
         </section>
         );
