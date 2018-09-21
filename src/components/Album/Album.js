@@ -1,7 +1,8 @@
 import React, {Component} from "react";
-import albumData from "./data/albums";
-import PlayerBar from "./PlayerBar";
-import "./../Album.css"
+import albumData from "../data/albums";
+import PlayerBar from "./../PlayerBar/PlayerBar";
+import "./Album.css";
+
 
 class Album extends Component{
     constructor(props){
@@ -145,11 +146,13 @@ class Album extends Component{
           </section>
 
           <table id="song-list">
-            <colgroup>
-                <col id="song-number-column" />
-                <col id="song-title-column" />
-                <col id="song-duration-column" />
-            </colgroup>  
+            <thead>
+                <tr>
+                <th>Number</th>
+                <th>Song</th>
+                <th>Duration</th>
+                </tr>
+            </thead>  
 
              <tbody>
                 {
@@ -164,10 +167,11 @@ class Album extends Component{
                 }
             </tbody>  
           </table>
-          
+   
           <PlayerBar 
             isPlaying={this.state.isPlaying} 
             currentSong={this.state.currentSong} 
+            album={this.state.album}
             currentTime = {this.audioElement.currentTime}
             duration = {this.audioElement.duration}
             handleSongClick={() => this.handleSongClick(this.state.currentSong)}
