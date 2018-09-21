@@ -123,16 +123,16 @@ class Album extends Component{
     }
 
     formatTime(time){
-        try{
+    
         var m = Math.floor(time / 60);
         var s = Math.floor(time % 60);
-        return m + ":" + s;
-        }catch(err){
-            console.log(err)
-            return "-:--";
-        }
-    }
-
+        if (s <  10) {
+            return m + ": 0" + s
+        }else{
+            return m + ":" + s;
+        }}
+       
+    
     render() {
       return(
         <section className="album">
